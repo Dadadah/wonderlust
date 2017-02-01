@@ -8,5 +8,4 @@ public class Wonderlust {
 		server = new ServerThread();
 		server.start();
 	}
-
 }

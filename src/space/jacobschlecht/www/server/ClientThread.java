@@ -8,13 +8,13 @@ import java.net.Socket;
 
 public class ClientThread extends Thread {
 	
-	Socket socket;
-	BufferedReader instream;
-	PrintWriter out;
-	int id;
-	String username;
-	long time;
-	String message;
+	private Socket socket;
+	private BufferedReader instream;
+	private PrintWriter out;
+	private int id;
+	private long time;
+	private String message;
+	private Player ply;
 
 	public ClientThread(Socket socket, int id, long time) {
 		this.socket = socket;
@@ -32,17 +32,20 @@ public class ClientThread extends Thread {
 	}
 
 	public void run() {
+		writeMessage("Please login!");
+		writeMessage("Just use /login username for now");
 		while (true) {
 			try {
 				if ((message = instream.readLine()) != null) {
-					//parseMessage(message);
-					// This is temporary
-					if (message.startsWith("/setusername ")) {
-						username = message.substring(13);
-					} else if (message.equals("/disconnect")) {
-						break;
+					if (ply == null) {
+						if (message.startsWith("/login ")) {
+							ply = new Player(id, message.substring(7), this);
+						} else {
+							writeMessage("Please login!");
+							writeMessage("Just use /login username for now");
+						}
 					} else {
-						Wonderlust.server.sendMessage(message, username);
+						ply.sentMessage(message);
 					}
 				}
 			} catch (IOException e) {

@@ -42,7 +42,11 @@ public class ServerThread extends Thread {
 		}
 	}
 	
-	public synchronized void sendMessage(String message, String username) {
+	public synchronized void sendGlobalMessage(String message) {
+		sendGlobalMessage(message, null);
+	}
+	
+	public synchronized void sendGlobalMessage(String username, String message) {
 		String formattedMessage = message;
 		if (username != null) {
 			formattedMessage = username + ": " + message;
