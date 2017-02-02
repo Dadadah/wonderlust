@@ -1,12 +1,14 @@
 package space.jacobschlecht.www.server;
 
+import space.jacobschlecht.www.server.commands.BaseCommand;
+
 public class Player {
 
 	ClientThread network;
-	World world;
+	public World world;
 	int id;
 	String username;
-	Room curRoom;
+	public Room curRoom;
 	
 	public Player(int id, String username, ClientThread network, World world) {
 		this.id = id;
@@ -17,15 +19,7 @@ public class Player {
 	}
 	
 	public void sentMessage(String message) {
-		//parseMessage(message);
-		//This is temporary
-		if (message.equals("/disconnect")) {
-			network.close();
-		} else if (message.startsWith("/g ")) {
-			world.sendMessage(username, message.substring(3));
-		 }else {
-			if (curRoom != null) curRoom.sendMessage(username, message);
-		}
+		BaseCommand.executeCommand(message, this);
 	}
 	
 	public void sendMessage(String message) {
@@ -33,8 +27,9 @@ public class Player {
 	}
 	
 	public void disconnect() {
-		if (curRoom != null) curRoom.removePlayer(this);
+		if (curRoom != null && curRoom != world) curRoom.removePlayer(this);
 		world.removePlayer(this);
+		network.close();
 	}
 
 }

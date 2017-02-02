@@ -56,7 +56,7 @@ public class ClientThread extends Thread {
 				break;
 			}
 		}
-		close();
+		ply.disconnect();
 	}
 	
 	public void writeMessage (String message) {
@@ -65,7 +65,6 @@ public class ClientThread extends Thread {
 	
 	public void close() {
 		try {
-			ply.disconnect();
 			instream.close();
 			out.close();
 			socket.close();

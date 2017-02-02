@@ -12,6 +12,7 @@ public class NetworkThread extends Thread {
 	BufferedReader instream;
 	PrintWriter out;
 	WonderlustClient client;
+	boolean connected = true;
 	
 	public NetworkThread(WonderlustClient client) {
 		this.client = client;
@@ -37,7 +38,7 @@ public class NetworkThread extends Thread {
 			e.printStackTrace();
 		}
 		
-		while (true) {
+		while (connected) {
 			String message;
 			try {
 				if ((message = instream.readLine()) != null) {
@@ -56,7 +57,7 @@ public class NetworkThread extends Thread {
 			instream.close();
 			out.close();
 			socket.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			//TODO: Catch this error if it actually needs to be caught?
 		}

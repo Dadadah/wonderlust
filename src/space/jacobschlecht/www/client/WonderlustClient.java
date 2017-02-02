@@ -1,6 +1,7 @@
 package space.jacobschlecht.www.client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -45,6 +46,7 @@ public class WonderlustClient extends Application {
 		Scene scene = new Scene(root, 500, 300);
 
         primaryStage.setTitle("Wonderlust");
+        primaryStage.setOnCloseRequest(e -> {Platform.exit(); System.exit(0);});
         primaryStage.setScene(scene);
         primaryStage.show();
 		
