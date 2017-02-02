@@ -15,11 +15,13 @@ public class ClientThread extends Thread {
 	private long time;
 	private String message;
 	private Player ply;
+	World world;
 
-	public ClientThread(Socket socket, int id, long time) {
+	public ClientThread(Socket socket, int id, long time, World world) {
 		this.socket = socket;
 		this.id = id;
 		this.time = time;
+		this.world = world;
 		
 		try {
 			instream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -39,7 +41,7 @@ public class ClientThread extends Thread {
 				if ((message = instream.readLine()) != null) {
 					if (ply == null) {
 						if (message.startsWith("/login ")) {
-							ply = new Player(id, message.substring(7), this);
+							ply = new Player(id, message.substring(7), this, world);
 						} else {
 							writeMessage("Please login!");
 							writeMessage("Just use /login username for now");
@@ -63,6 +65,7 @@ public class ClientThread extends Thread {
 	
 	public void close() {
 		try {
+			ply.disconnect();
 			instream.close();
 			out.close();
 			socket.close();

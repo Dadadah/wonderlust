@@ -7,12 +7,14 @@ import java.util.ArrayList;
 public class ServerThread extends Thread {
 
 	ServerSocket serversocket;
+	World world;
 	ArrayList<ClientThread> clients;
 	int idTicker = 0;
 	boolean online = true;
 	
-	public ServerThread() {
+	public ServerThread(World world) {
 		clients = new ArrayList<>();
+		this.world = world;
 	}
 	
 	public void run() {
@@ -23,7 +25,7 @@ public class ServerThread extends Thread {
 				System.out.println("Waiting on clients...");
 				Socket socket = serversocket.accept();
 				if (!online) break;
-				ClientThread client = new ClientThread(socket, idTicker++, System.currentTimeMillis());
+				ClientThread client = new ClientThread(socket, idTicker++, System.currentTimeMillis(), world);
 				clients.add(client);
 				client.start();
 			}
@@ -40,21 +42,6 @@ public class ServerThread extends Thread {
 			System.out.println("Exception in ServerThread: " + e);
 			e.printStackTrace();
 		}
-	}
-	
-	public synchronized void sendGlobalMessage(String message) {
-		sendGlobalMessage(message, null);
-	}
-	
-	public synchronized void sendGlobalMessage(String username, String message) {
-		String formattedMessage = message;
-		if (username != null) {
-			formattedMessage = username + ": " + message;
-		}
-		for (ClientThread client : clients) {
-			client.writeMessage(formattedMessage);
-		}
-		System.out.println(formattedMessage);
 	}
 	
 	@SuppressWarnings("resource")

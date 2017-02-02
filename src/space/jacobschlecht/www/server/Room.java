@@ -9,6 +9,7 @@ public class Room {
 
 	public Room(String name) {
 		this.name = name;
+		players = new ArrayList<>();
 	}
 
 	public void addPlayer(Player player) {
@@ -17,7 +18,6 @@ public class Room {
 	}
 
 	public void removePlayer(Player player) {
-		player.curRoom = null;
 		players.remove(player);
 	}
 	
