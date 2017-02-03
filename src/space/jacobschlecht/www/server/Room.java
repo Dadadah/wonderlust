@@ -42,5 +42,9 @@ public class Room {
 	public boolean isWorld() {
 		return false;
 	}
+	
+	public boolean isDungeon() {
+		return false;
+	}
 
 }
