@@ -25,6 +25,7 @@ public class BaseCommand {
 		commands.put("say", new CommandSay());
 		commands.put("gsay", new CommandGSay());
 		commands.put("disconnect", new CommandDisconnect());
+		commands.put("town", new CommandTown());
 	}
 	
 }

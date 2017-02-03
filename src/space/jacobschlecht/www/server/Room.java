@@ -5,11 +5,15 @@ import java.util.ArrayList;
 public class Room {
 	
 	protected ArrayList<Player> players;
-	String name;
+	private String name;
 
 	public Room(String name) {
 		this.name = name;
 		players = new ArrayList<>();
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	public void addPlayer(Player player) {
@@ -46,5 +50,15 @@ public class Room {
 	public boolean isDungeon() {
 		return false;
 	}
+	
+	public boolean isTown() {
+		return false;
+	}
+	
+	public boolean isBuilding() {
+		return false;
+	}
+
+
 
 }
