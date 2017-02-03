@@ -4,11 +4,11 @@ import space.jacobschlecht.www.server.commands.BaseCommand;
 
 public class Player {
 
-	ClientThread network;
-	public World world;
-	int id;
-	String username;
-	public Room curRoom;
+	private ClientThread network;
+	private World world;
+	private int id;
+	private String username;
+	private Room curRoom;
 	
 	public Player(int id, String username, ClientThread network, World world) {
 		this.id = id;
@@ -27,9 +27,43 @@ public class Player {
 	}
 	
 	public void disconnect() {
-		if (curRoom != null && curRoom != world) curRoom.removePlayer(this);
+		if (curRoom != null) curRoom.removePlayer(this);
 		world.removePlayer(this);
 		network.close();
+	}
+	
+	// GETTERS
+	
+	public World getWorld() {
+		return world;
+	}
+	
+	public ClientThread getNetwork() {
+		return network;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public Room getRoom() {
+		return curRoom;
+	}
+	
+	// SETTERS
+	
+	public void setWorld(World world) {
+		this.world = world;
+	}
+	
+	public void setRoom(Room room) {
+		if (!room.isWorld()) {
+			this.curRoom = room;
+		}
 	}
 
 }

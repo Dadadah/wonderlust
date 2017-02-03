@@ -6,4 +6,23 @@ public class World extends Room {
 		super(name);
 	}
 	
+	@Override
+	public boolean isWorld() {
+		return true;
+	}
+	
+	public Player getPlayerByUsername(String name) {
+		for (Player ply : players) {
+			if (ply.getUsername().equals(name)) return ply;
+		}
+		return null;
+	}
+	
+	public Player getPlayerByUsername(Player caller, String name) {
+		for (Player ply : players) {
+			if (ply.getUsername().equals(name)) return ply;
+		}
+		caller.sendMessage("Player " + name + " not found.");
+		return null;
+	}
 }

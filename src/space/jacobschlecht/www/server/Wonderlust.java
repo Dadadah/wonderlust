@@ -8,8 +8,7 @@ public class Wonderlust {
 
 	public static void main(String[] args) {
 		BaseCommand.initializeCommands();
-		World world = new World("Default");
-		server = new ServerThread(world);
+		server = new ServerThread(new World("Default"));
 		server.start();
 	}
 }

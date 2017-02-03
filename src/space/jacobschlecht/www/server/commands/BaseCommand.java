@@ -23,6 +23,7 @@ public class BaseCommand {
 	
 	public static void initializeCommands() {
 		commands.put("say", new CommandSay());
+		commands.put("gsay", new CommandGSay());
 		commands.put("disconnect", new CommandDisconnect());
 	}
 	

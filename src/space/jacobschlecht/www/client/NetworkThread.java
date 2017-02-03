@@ -41,6 +41,9 @@ public class NetworkThread extends Thread {
 		while (connected) {
 			String message;
 			try {
+				instream.mark(8);
+				if (instream.read() == -1) connected = false;
+				else instream.reset();
 				if ((message = instream.readLine()) != null) {
 					client.console.appendText(message + "\n");
 				}
@@ -50,10 +53,12 @@ public class NetworkThread extends Thread {
 			}
 		}
 		close();
+		client.console.appendText("You have been disconnected. Please restart the program to reconnect.");
 	}
 	
 	public void close() {
 		try {
+			connected = false;
 			instream.close();
 			out.close();
 			socket.close();

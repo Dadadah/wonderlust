@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ServerThread extends Thread {
 
 	ServerSocket serversocket;
-	World world;
+	private World world;
 	ArrayList<ClientThread> clients;
 	int idTicker = 0;
 	boolean online = true;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Room {
 	
-	private ArrayList<Player> players;
+	protected ArrayList<Player> players;
 	String name;
 
 	public Room(String name) {
@@ -13,16 +13,19 @@ public class Room {
 	}
 
 	public void addPlayer(Player player) {
-		player.curRoom = this;
+		if (!this.isWorld()) player.setRoom(this);
 		players.add(player);
 	}
 
 	public void removePlayer(Player player) {
+		if (!this.isWorld()) player.setRoom(null);
 		players.remove(player);
 	}
 	
 	public void sendMessage(Player ply, String message) {
-		String formattedMessage = ply.username + ": " + message;
+		String formattedMessage;
+		if (this.isWorld()) formattedMessage = "Global> " + ply.getUsername() + ": " + message;
+		else formattedMessage = ply.getUsername() + ": " + message;
 		for (Player ply1 : players) {
 			ply1.sendMessage(formattedMessage);
 		}
@@ -34,6 +37,10 @@ public class Room {
 		for (Player ply : players) {
 			ply.sendMessage(formattedMessage);
 		}
+	}
+	
+	public boolean isWorld() {
+		return false;
 	}
 
 }

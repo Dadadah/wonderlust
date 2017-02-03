@@ -15,7 +15,8 @@ public class ClientThread extends Thread {
 	private long time;
 	private String message;
 	private Player ply;
-	World world;
+	private boolean connected = true;
+	private World world;
 
 	public ClientThread(Socket socket, int id, long time, World world) {
 		this.socket = socket;
@@ -36,12 +37,14 @@ public class ClientThread extends Thread {
 	public void run() {
 		writeMessage("Please login!");
 		writeMessage("Just use /login username for now");
-		while (true) {
+		while (connected) {
 			try {
 				if ((message = instream.readLine()) != null) {
 					if (ply == null) {
 						if (message.startsWith("/login ")) {
-							ply = new Player(id, message.substring(7), this, world);
+							if (world.getPlayerByUsername(message.substring(7)) == null) 
+								ply = new Player(id, message.substring(7), this, world);
+							else writeMessage("Username taken, try again.");
 						} else {
 							writeMessage("Please login!");
 							writeMessage("Just use /login username for now");
@@ -65,6 +68,7 @@ public class ClientThread extends Thread {
 	
 	public void close() {
 		try {
+			connected = false;
 			instream.close();
 			out.close();
 			socket.close();
