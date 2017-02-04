@@ -3,14 +3,14 @@ package space.jacobschlecht.www.server.commands;
 import java.util.HashMap;
 import space.jacobschlecht.www.server.Player;
 
-public class BaseCommand {
+public abstract class Command {
 
-	private static HashMap<String, BaseCommand> commands = new HashMap<>();
-	
-	public String execute(String[] args, Player ply) {
-		return args[0];
-	}
-	
+	public abstract String execute(String[] args, Player ply);
+
+	public abstract String help(Player ply);
+
+	protected static HashMap<String, Command> commands = new HashMap<>();
+
 	public static String executeCommand(String command, Player ply) {
 		String[] args = command.split(" ");
 		command = args[0];
@@ -19,8 +19,10 @@ public class BaseCommand {
 		}
 		return "Command not found!";
 	}
-	
+
 	public static void initializeCommands() {
+		commands.put("help", new CommandHelp());
+		commands.put("?", new CommandHelp());
 		commands.put("say", new CommandSay());
 		commands.put("gsay", new CommandGSay());
 		commands.put("disconnect", new CommandDisconnect());
@@ -28,5 +30,5 @@ public class BaseCommand {
 		commands.put("whoishere", new CommandWhoIsHere());
 		commands.put("whoisonline", new CommandWhoIsOnline());
 	}
-	
+
 }

@@ -1,6 +1,6 @@
 package space.jacobschlecht.www.server;
 
-import space.jacobschlecht.www.server.commands.BaseCommand;
+import space.jacobschlecht.www.server.commands.Command;
 
 public class Player {
 
@@ -19,7 +19,7 @@ public class Player {
 	}
 	
 	public void sentMessage(String message) {
-		String returned = BaseCommand.executeCommand(message, this);
+		String returned = Command.executeCommand(message, this);
 		if (returned != null && returned != "") {
 			sendMessage(returned);
 		}

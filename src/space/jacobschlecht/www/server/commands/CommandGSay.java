@@ -2,7 +2,7 @@ package space.jacobschlecht.www.server.commands;
 
 import space.jacobschlecht.www.server.Player;
 
-public class CommandGSay extends BaseCommand {
+public class CommandGSay extends Command {
 
 	public String execute(String[] args, Player ply) {
 		StringBuilder message = new StringBuilder();
@@ -11,6 +11,10 @@ public class CommandGSay extends BaseCommand {
 		}
 		ply.getWorld().sendMessage(ply, message.toString());
 		return "";
+	}
+	
+	public String help(Player ply) {
+		return "Send a message to the global chat.";
 	}
 	
 }

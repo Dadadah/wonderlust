@@ -5,7 +5,7 @@ import space.jacobschlecht.www.server.Room;
 import space.jacobschlecht.www.server.Town;
 import space.jacobschlecht.www.server.World;
 
-public class CommandTown extends BaseCommand {
+public class CommandTown extends Command {
 
 	public String execute(String[] args, Player ply) {
 		
@@ -21,6 +21,10 @@ public class CommandTown extends BaseCommand {
 		}
 		
 		return "You have teleported to " + args[1];
+	}
+	
+	public String help(Player ply) {
+		return "Teleport to a town by name, can't be used while in a dungeon.";
 	}
 
 }

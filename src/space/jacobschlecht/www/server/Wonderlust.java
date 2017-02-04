@@ -1,13 +1,13 @@
 package space.jacobschlecht.www.server;
 
-import space.jacobschlecht.www.server.commands.BaseCommand;
+import space.jacobschlecht.www.server.commands.Command;
 
 public class Wonderlust {
 	
 	public static ServerThread server;
 
 	public static void main(String[] args) {
-		BaseCommand.initializeCommands();
+		Command.initializeCommands();
 		server = new ServerThread(new World("Default"));
 		server.start();
 	}

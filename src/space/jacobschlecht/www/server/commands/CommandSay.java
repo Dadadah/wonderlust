@@ -2,7 +2,7 @@ package space.jacobschlecht.www.server.commands;
 
 import space.jacobschlecht.www.server.Player;
 
-public class CommandSay extends BaseCommand {
+public class CommandSay extends Command {
 
 	public String execute(String[] args, Player ply) {
 		StringBuilder message = new StringBuilder();
@@ -13,6 +13,10 @@ public class CommandSay extends BaseCommand {
 			ply.getRoom().sendMessage(ply, message.toString());
 		}
 		return "";
+	}
+	
+	public String help(Player ply) {
+		return "Send a message to your current room.";
 	}
 	
 }
