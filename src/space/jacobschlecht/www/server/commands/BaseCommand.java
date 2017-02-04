@@ -1,7 +1,6 @@
 package space.jacobschlecht.www.server.commands;
 
 import java.util.HashMap;
-
 import space.jacobschlecht.www.server.Player;
 
 public class BaseCommand {
@@ -26,6 +25,8 @@ public class BaseCommand {
 		commands.put("gsay", new CommandGSay());
 		commands.put("disconnect", new CommandDisconnect());
 		commands.put("town", new CommandTown());
+		commands.put("whoishere", new CommandWhoIsHere());
+		commands.put("whoisonline", new CommandWhoIsOnline());
 	}
 	
 }

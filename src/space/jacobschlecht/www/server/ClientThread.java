@@ -56,6 +56,7 @@ public class ClientThread extends Thread {
 			} catch (IOException e) {
 				System.out.println("IO Exception in ClientThread: " + e.getMessage());
 				e.printStackTrace();
+				ply.disconnect();
 				break;
 			}
 		}

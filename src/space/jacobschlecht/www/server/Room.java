@@ -1,6 +1,7 @@
 package space.jacobschlecht.www.server;
 
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class Room {
 	
@@ -59,6 +60,17 @@ public class Room {
 		return false;
 	}
 
-
+	public String whoIsHere() {
+		StringJoiner plys = new StringJoiner(", ");
+		String prefix;
+		if (this.isWorld()) prefix = "Online in " + name + ": ";
+		else prefix = "Here in " + name + ": ";
+		
+		for (Player ply : players) {
+			plys.add(ply.getUsername());
+		}
+		
+		return (prefix + plys.toString());
+	}
 
 }

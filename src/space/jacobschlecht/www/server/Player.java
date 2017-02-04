@@ -19,7 +19,10 @@ public class Player {
 	}
 	
 	public void sentMessage(String message) {
-		BaseCommand.executeCommand(message, this);
+		String returned = BaseCommand.executeCommand(message, this);
+		if (returned != null && returned != "") {
+			sendMessage(returned);
+		}
 	}
 	
 	public void sendMessage(String message) {
