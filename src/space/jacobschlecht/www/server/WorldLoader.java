@@ -10,49 +10,43 @@ public class WorldLoader {
 	
 	private static BufferedReader reader;
 	
-	private static String[] readFile(String worldName) throws IOException {
-		reader = new BufferedReader(new FileReader(new File(worldName)));
-		String line;
-		ArrayList<String> lines = new ArrayList<>();
-		while ((line = reader.readLine()) != null) {
-			if (line.matches(" \t+")) continue;
-			lines.add(line);
-		}
-		return lines.toArray(new String[lines.size()]);
-	}
-	
-	private static Building[] parseBuildings();
-	
-	private static Town[] parseTowns(String[] townInstructions) {
-		ArrayList<Town> towns = new ArrayList<>();
-		Town tempTown;
-		
-		for (int i = 0; i < townInstructions.length; i++) {
-			
-		}
-		
-		return towns.toArray(new Town[towns.size()]);
-	}
-	
 	public static World loadWorld(String worldName) {
-		World world;
-		String[] fileContents;
-		try {
-			fileContents = readFile(worldName);
-		} catch (IOException e) {
-			return null;
-		}
-		String[] townInstructions = new String[fileContents.length];
-		for (int i = 2; i < fileContents.length; i++) {
-			if (fileContents[i].contains("Dungeons:")) {
-				break;
-			} else {
-				townInstructions[i-2] = fileContents[i];
+		
+		World world = new World("worldName");
+		
+		File worldDir = new File(worldName);
+		
+		if (worldDir.isDirectory()) {
+			File townDir = new File(worldName + "/Towns");
+			File dunDir = new File(worldName + "/Dungeons");
+			if (townDir.isDirectory() && dunDir.isDirectory()) {
+				parseTowns(townDir, worldName);
+				parseDungeons(dunDir, worldName);
 			}
 		}
-		Town[] towns = parseTowns(townInstructions);
-		world = new World("Default");
+		
 		return world;
 	}
 
+	private static ArrayList<Town> parseTowns(File townDir, String worldName) {
+		ArrayList<Town> towns = new ArrayList<>();
+		
+		String[] townDirs = townDir.list();
+		
+		for (int i = 0; i < townDirs.length; i++) {
+			File tempTownDir = new File(worldName + "/Towns/" + townDirs[i]);
+			Town tempTown = new Town(townDirs[i]);
+			if (tempTownDir.isDirectory()) {
+				
+			}
+		}
+		
+		return towns;
+	}
+
+	private static ArrayList<Dungeon> parseDungeons(File dunDir, String worldName) {
+		ArrayList<Dungeon> duns = new ArrayList<>();
+		
+		return duns;
+	}
 }

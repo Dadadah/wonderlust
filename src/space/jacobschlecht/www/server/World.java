@@ -6,6 +6,7 @@ public class World extends Room {
 	
 	private ArrayList<Town> towns;
 	private ArrayList<Dungeon> dungeons;
+	private Town spawn;
 	
 	public World(String name) {
 		super(name);
@@ -44,5 +45,21 @@ public class World extends Room {
 			if (d.getName().equals(name)) return d;
 		}
 		return null;
+	}
+	
+	public void addTown(Town town) {
+		towns.add(town);
+	}
+	
+	public void addDungeon(Dungeon dun) {
+		dungeons.add(dun);
+	}
+	
+	public void setSpawn(Town town) {
+		spawn = town;
+	}
+	
+	public Town getSpawn() {
+		return spawn;
 	}
 }
