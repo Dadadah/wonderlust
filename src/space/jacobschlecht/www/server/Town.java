@@ -14,5 +14,9 @@ public class Town extends Room {
 	public boolean isTown() {
 		return true;
 	}
+	
+	public void setBuildings(ArrayList<Building> buildings) {
+		this.buildings = buildings;
+	}
 
 }

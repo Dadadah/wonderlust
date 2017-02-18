@@ -20,8 +20,8 @@ public class WorldLoader {
 			File townDir = new File(worldName + "/Towns");
 			File dunDir = new File(worldName + "/Dungeons");
 			if (townDir.isDirectory() && dunDir.isDirectory()) {
-				parseTowns(townDir, worldName);
-				parseDungeons(dunDir, worldName);
+				world.setTowns(parseTowns(townDir, worldName));
+				world.setDungeons(parseDungeons(dunDir, worldName));
 			}
 		}
 		
@@ -37,8 +37,9 @@ public class WorldLoader {
 			File tempTownDir = new File(worldName + "/Towns/" + townDirs[i]);
 			Town tempTown = new Town(townDirs[i]);
 			if (tempTownDir.isDirectory()) {
-				
+				tempTown.setBuildings(parseBuildings(new File(worldName + "/Towns/" + townDirs[i] + "/Buildings/"), worldName + townDirs[i]));
 			}
+			towns.add(tempTown);
 		}
 		
 		return towns;
@@ -48,5 +49,31 @@ public class WorldLoader {
 		ArrayList<Dungeon> duns = new ArrayList<>();
 		
 		return duns;
+	}
+	
+	private static ArrayList<Building> parseBuildings(File buildDir, String townDirName) {
+		ArrayList<Building> buildings = new ArrayList<>();
+		
+		File[] buildingFiles = buildDir.listFiles();
+		for (int i = 0; i < buildingFiles.length; i++) {
+			String fileName = buildingFiles[i].getName();
+			Building.buildingType type = Building.buildingType.DEFAULT;
+			if (fileName.equals("blacksmith")) {
+				type = Building.buildingType.BLACKSMITH;
+			} else if (fileName.equals("townhall")) {
+				type = Building.buildingType.TOWN_HALL;
+			} else if (fileName.equals("weaponshop")) {
+				type = Building.buildingType.WEAPONSHOP;
+			} else if (fileName.equals("armorshop")) {
+				type = Building.buildingType.ARMORSHOP;
+			} else if (fileName.equals("enchantery")) {
+				type = Building.buildingType.ENCHANTERY;
+			} else if (fileName.equals("library")) {
+				type = Building.buildingType.LIBRARY;
+			}
+			buildings.add(new Building(townDirName + fileName, type));
+		}
+		
+		return buildings;
 	}
 }

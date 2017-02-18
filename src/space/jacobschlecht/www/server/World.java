@@ -47,6 +47,14 @@ public class World extends Room {
 		return null;
 	}
 	
+	public void setTowns(ArrayList<Town> towns) {
+		this.towns = towns;
+	}
+	
+	public void setDungeons(ArrayList<Dungeon> dungeons) {
+		this.dungeons = dungeons;
+	}
+	
 	public void addTown(Town town) {
 		towns.add(town);
 	}
