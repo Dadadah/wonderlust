@@ -2,6 +2,7 @@ package space.jacobschlecht.www.server;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class WorldLoader {
 	
 	public static World loadWorld(String worldName) {
 		
-		World world = new World("worldName");
+		World world = new World(worldName);
 		
 		File worldDir = new File(worldName);
 		
@@ -48,7 +49,38 @@ public class WorldLoader {
 	private static ArrayList<Dungeon> parseDungeons(File dunDir, String worldName) {
 		ArrayList<Dungeon> duns = new ArrayList<>();
 		
+		String[] dunDirs = dunDir.list();
+		
+		for (int i = 0; i < dunDirs.length; i++) {
+			File tempDunDir = new File(worldName + "/Dungeons/" + dunDirs[i]);
+			Dungeon tempDun = new Dungeon(dunDirs[i]);
+			if (tempDunDir.isDirectory()) {
+				tempDun = parseDungeon(tempDunDir, dunDirs[i]);
+			}
+			duns.add(tempDun);
+		}
+		
 		return duns;
+	}
+	
+	private static Dungeon parseDungeon(File dunDir, String dunName) {
+		try {
+			reader = new BufferedReader(new FileReader(new File(dunDir.getAbsolutePath() + "ab.txt")));
+
+			String dunPrefix = reader.readLine();
+			reader.close();
+			Dungeon dun = new Dungeon(dunPrefix + "1");
+			
+			
+			
+			return dun;
+		} catch (FileNotFoundException e) {
+			System.out.println("ab.txt not found for dungeon " + dunName);
+			return new Dungeon(dunName);
+		} catch (IOException e) {
+			System.out.println("IO Exception found for dungeon " + dunName);
+			return new Dungeon(dunName);
+		}
 	}
 	
 	private static ArrayList<Building> parseBuildings(File buildDir, String townDirName) {
